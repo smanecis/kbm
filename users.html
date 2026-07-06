@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kelola User</title>
+
+<style>
+body{
+    font-family:Segoe UI;
+    background:#f4f4f4;
+    margin:0;
+}
+
+.header{
+    background:#2e7d32;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    margin-top:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.form{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr auto;
+    gap:10px;
+}
+
+input,
+select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.btnTambah{
+    background:#2e7d32;
+    color:white;
+}
+
+.btnHapus{
+    background:#d32f2f;
+    color:white;
+}
+
+table{
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+}
+
+th{
+    background:#fbc02d;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+@media(max-width:900px){
+    .form{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h2>👥 Kelola User</h2>
+</div>
+
+<div class="container">
+<div class="card">
+
+<div class="form">
+
+<input
+type="text"
+id="nama"
+placeholder="Nama">
+
+<input
+type="text"
+id="username"
+placeholder="Username">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<select id="kelas"></select>
+
+<button
+class="btnTambah"
+onclick="tambahUser()">
+Tambah
+</button>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Nama</th>
+<th>Username</th>
+<th>Role</th>
+<th>Kelas</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="dataUser">
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/users.js"></script>
+
+</body>
+</html>
