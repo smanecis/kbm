@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Data Siswa</title>
+
+<style>
+body{
+    font-family:Segoe UI;
+    background:#f4f4f4;
+    margin:0;
+}
+
+.header{
+    background:#2e7d32;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    margin-top:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 2fr 1fr auto;
+    gap:10px;
+}
+
+input,select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.btnTambah{
+    background:#2e7d32;
+    color:white;
+}
+
+.btnHapus{
+    background:#d32f2f;
+    color:white;
+}
+
+table{
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+}
+
+th{
+    background:#fbc02d;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+.pencarian{
+    margin-top:20px;
+}
+
+@media(max-width:800px){
+    .form{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h2>👨‍🎓 Data Siswa</h2>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<div class="form">
+
+<input
+type="text"
+id="nis"
+placeholder="NIS">
+
+<input
+type="text"
+id="nama"
+placeholder="Nama siswa">
+
+<select id="kelas">
+</select>
+
+<button
+class="btnTambah"
+onclick="tambahSiswa()">
+Tambah
+</button>
+
+</div>
+
+<div class="pencarian">
+<input
+type="text"
+id="cari"
+placeholder="Cari nama siswa..."
+onkeyup="cariSiswa()">
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>No</th>
+<th>NIS</th>
+<th>Nama</th>
+<th>Kelas</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="dataSiswa">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/siswa.js"></script>
+
+</body>
+</html>
