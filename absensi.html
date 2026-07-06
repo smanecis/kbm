@@ -1,80 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Absensi</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>Absensi Hari Ini</title>
 
 <style>
 body{
-    font-family:Segoe UI;
-    background:#f4f4f4;
     margin:0;
+    font-family:Segoe UI;
+    background:#f5f5f5;
 }
 
 .header{
-    background:#2e7d32;
+    background:linear-gradient(
+        90deg,
+        #2e7d32,
+        #fbc02d
+    );
     color:white;
     padding:20px;
 }
 
 .container{
     width:95%;
-    max-width:1200px;
+    max-width:900px;
     margin:auto;
-    margin-top:30px;
+    margin-top:20px;
 }
 
-table{
-    width:100%;
+.info{
     background:white;
-    border-collapse:collapse;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
 }
 
-th{
-    background:#fbc02d;
+.progress{
+    font-size:18px;
+    color:#2e7d32;
+    font-weight:bold;
+}
+
+.siswa-card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.nama{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.status{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.btnStatus{
+    border:none;
+    border-radius:12px;
+    padding:10px 15px;
+    cursor:pointer;
     color:white;
-    padding:12px;
+    font-weight:bold;
 }
 
-td{
-    padding:12px;
-    border-bottom:1px solid #ddd;
+.hadir{
+    background:#2e7d32;
 }
 
-select{
-    padding:8px;
-    border-radius:8px;
+.izin{
+    background:#fbc02d;
+}
+
+.sakit{
+    background:#1976d2;
+}
+
+.alpha{
+    background:#d32f2f;
+}
+
+.selected{
+    transform:scale(1.08);
+    box-shadow:0 0 10px #999;
+}
+
+.footer{
+    text-align:center;
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
+.simpan{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:15px;
+    font-size:16px;
+    cursor:pointer;
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-<h2>Absensi Hari Ini</h2>
+    <h2>📝 Absensi Hari Ini</h2>
 </div>
 
 <div class="container">
 
-<table>
+<div class="info">
+    <h3 id="namaKelas"></h3>
+    <p id="tanggal"></p>
 
-<thead>
-<tr>
-<th>No</th>
-<th>Nama Siswa</th>
-<th>Status</th>
-</tr>
-</thead>
+    <br>
 
-<tbody id="dataSiswa">
+    <div class="progress">
+        Progress:
+        <span id="progress">
+            0 / 0
+        </span>
+    </div>
+</div>
 
-</tbody>
-</table>
+<div id="daftarSiswa">
 
-<br>
+</div>
 
-<button onclick="simpanAbsensi()">
-Simpan Absensi
+<div class="footer">
+<button
+class="simpan"
+onclick="simpanAbsensi()">
+💾 Simpan Absensi
 </button>
+</div>
 
 </div>
 
