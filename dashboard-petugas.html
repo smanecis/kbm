@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Petugas</title>
+
+<style>
+body{
+    font-family:Segoe UI;
+    background:#f4f4f4;
+    margin:0;
+}
+
+.header{
+    background:linear-gradient(90deg,#2e7d32,#fbc02d);
+    color:white;
+    padding:20px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    margin-top:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+button{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h2 id="judul"></h2>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Absensi Hari Ini</h3>
+
+<p id="kelasPetugas"></p>
+
+<br>
+
+<button onclick="location.href='absensi.html'">
+Mulai Absensi
+</button>
+
+</div>
+
+</div>
+
+<script src="js/dashboard-petugas.js"></script>
+
+</body>
+</html>
