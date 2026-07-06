@@ -1,11 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Aplikasi Absensi SMANECIS</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#2e7d32,#fbc02d);
+    overflow:hidden;
+}
+
+/* Lingkaran dekorasi */
+body::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:rgba(255,255,255,0.08);
+    border-radius:50%;
+    top:-100px;
+    left:-100px;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    background:rgba(255,255,255,0.08);
+    border-radius:50%;
+    bottom:-120px;
+    right:-120px;
+}
+
+.login-card{
+    position:relative;
+    width:380px;
+    background:rgba(255,255,255,0.95);
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
+    text-align:center;
+    animation:fadeIn 1s ease;
+}
+
+.logo{
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+h2{
+    color:#2e7d32;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#666;
+    margin-bottom:30px;
+    font-size:14px;
+}
+
+.input-group{
+    margin-bottom:18px;
+    text-align:left;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:6px;
+    color:#2e7d32;
+    font-weight:600;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border:2px solid #e0e0e0;
+    border-radius:12px;
+    outline:none;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    border-color:#2e7d32;
+    box-shadow:0 0 8px rgba(46,125,50,0.3);
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(90deg,#2e7d32,#43a047);
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(46,125,50,0.3);
+}
+
+.footer{
+    margin-top:20px;
+    color:#777;
+    font-size:13px;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:480px){
+    .login-card{
+        width:92%;
+        padding:25px;
+    }
+}
+</style>
+</head>
 <body>
 
-<input type="text" id="username">
-<input type="password" id="password">
-<button onclick="login()">Login</button>
+<div class="login-card">
 
+    <!-- Ganti dengan logo sekolah -->
+    <img src="assets/logo.png" class="logo" alt="Logo Sekolah">
+
+    <h2>APLIKASI ABSENSI</h2>
+    <p class="subtitle">
+        SMANECIS - Sistem Kehadiran Siswa
+    </p>
+
+    <div class="input-group">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Masukkan username">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Masukkan password">
+    </div>
+
+    <button onclick="login()">
+        LOGIN
+    </button>
+
+    <div class="footer">
+        © 2026 SMANECIS
+    </div>
+
+</div>
+
+<!-- Library Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- File koneksi -->
 <script src="js/supabase.js"></script>
+
+<!-- File login -->
 <script src="js/login.js"></script>
 
 </body>
+</html>
