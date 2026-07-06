@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Absensi</title>
+
+<style>
+body{
+    font-family:Segoe UI;
+    background:#f4f4f4;
+    margin:0;
+}
+
+.header{
+    background:#2e7d32;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    margin-top:30px;
+}
+
+table{
+    width:100%;
+    background:white;
+    border-collapse:collapse;
+}
+
+th{
+    background:#fbc02d;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+select{
+    padding:8px;
+    border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h2>Absensi Hari Ini</h2>
+</div>
+
+<div class="container">
+
+<table>
+
+<thead>
+<tr>
+<th>No</th>
+<th>Nama Siswa</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="dataSiswa">
+
+</tbody>
+
+</table>
+
+<br>
+
+<button onclick="simpanAbsensi()">
+Simpan Absensi
+</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/absensi.js"></script>
+
+</body>
+</html>
