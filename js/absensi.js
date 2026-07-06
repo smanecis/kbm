@@ -60,14 +60,13 @@ async function loadData() {
         statusSiswa[s.id] = 'Hadir';
     });
 
-    // Ambil absensi yang sudah ada hari ini
+    // Ambil absensi hari ini jika sudah ada
     const ids = siswa.map(s => s.id);
 
     if (ids.length > 0) {
 
         const {
-            data: absenHariIni,
-            error: errorAbsen
+            data: absenHariIni
         } =
             await supabaseClient
                 .from('absensi')
@@ -75,7 +74,7 @@ async function loadData() {
                 .eq('tanggal', hariIni)
                 .in('siswa_id', ids);
 
-        if (!errorAbsen && absenHariIni) {
+        if (absenHariIni) {
             absenHariIni.forEach(a => {
                 statusSiswa[a.siswa_id] =
                     a.status;
@@ -95,11 +94,22 @@ function render() {
         const status =
             statusSiswa[s.id];
 
+        const warna =
+            'status-' +
+            status.toLowerCase();
+
         html += `
         <div class="siswa-card">
 
             <div class="nama">
                 ${s.nama}
+            </div>
+
+            <div class="statusAktif">
+                Status :
+                <span class="${warna}">
+                    ${status.toUpperCase()}
+                </span>
             </div>
 
             <div class="status">
@@ -138,8 +148,9 @@ function render() {
         `;
     });
 
-    document.getElementById('daftarSiswa')
-        .innerHTML = html;
+    document.getElementById(
+        'daftarSiswa'
+    ).innerHTML = html;
 
     updateProgress();
 }
@@ -150,12 +161,16 @@ function buatButton(
     css,
     selected
 ) {
+
+    const aktif =
+        selected === value;
+
     return `
         <button
             class="
                 btnStatus
                 ${css}
-                ${selected === value ? 'selected' : ''}
+                ${aktif ? 'selected' : ''}
             "
             onclick="
                 pilihStatus(
@@ -163,6 +178,7 @@ function buatButton(
                     '${value}'
                 )
             ">
+            ${aktif ? '✔ ' : ''}
             ${value}
         </button>
     `;
