@@ -1,95 +1,226 @@
-const user =
-JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user'));
+
+if (!user) {
+    location.href = 'login.html';
+}
+
+const hariIni = new Date().toISOString().slice(0, 10);
 
 let siswa = [];
+let statusSiswa = {};
 
-loadSiswa();
+loadData();
 
-async function loadSiswa(){
+async function loadData() {
 
-    const { data } =
+    // Tanggal
+    document.getElementById('tanggal').innerText =
+        new Date().toLocaleDateString(
+            'id-ID',
+            {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }
+        );
+
+    // Nama kelas
+    const { data: kelas } =
         await supabaseClient
-        .from('siswa')
-        .select('*')
-        .eq('kelas_id', user.kelas_id)
-        .order('nama');
+            .from('kelas')
+            .select('nama_kelas')
+            .eq('id', user.kelas_id)
+            .single();
 
-    siswa = data;
+    if (kelas) {
+        document.getElementById('namaKelas')
+            .innerText = kelas.nama_kelas;
+    }
 
-    let html = "";
+    // Ambil siswa
+    const { data, error } =
+        await supabaseClient
+            .from('siswa')
+            .select('*')
+            .eq('kelas_id', user.kelas_id)
+            .order('nama');
 
-    data.forEach((s,i)=>{
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    siswa = data || [];
+
+    // Default semua siswa Hadir
+    statusSiswa = {};
+
+    siswa.forEach(s => {
+        statusSiswa[s.id] = 'Hadir';
+    });
+
+    // Ambil absensi yang sudah ada hari ini
+    const ids = siswa.map(s => s.id);
+
+    if (ids.length > 0) {
+
+        const {
+            data: absenHariIni,
+            error: errorAbsen
+        } =
+            await supabaseClient
+                .from('absensi')
+                .select('*')
+                .eq('tanggal', hariIni)
+                .in('siswa_id', ids);
+
+        if (!errorAbsen && absenHariIni) {
+            absenHariIni.forEach(a => {
+                statusSiswa[a.siswa_id] =
+                    a.status;
+            });
+        }
+    }
+
+    render();
+}
+
+function render() {
+
+    let html = '';
+
+    siswa.forEach(s => {
+
+        const status =
+            statusSiswa[s.id];
 
         html += `
-        <tr>
-            <td>${i+1}</td>
-            <td>${s.nama}</td>
-            <td>
-                <select
-                id="status_${s.id}">
-                    <option value="Hadir">
-                        Hadir
-                    </option>
-                    <option value="Sakit">
-                        Sakit
-                    </option>
-                    <option value="Izin">
-                        Izin
-                    </option>
-                    <option value="Alpha">
-                        Alpha
-                    </option>
-                </select>
-            </td>
-        </tr>
+        <div class="siswa-card">
+
+            <div class="nama">
+                ${s.nama}
+            </div>
+
+            <div class="status">
+
+                ${buatButton(
+                    s.id,
+                    'Hadir',
+                    'hadir',
+                    status
+                )}
+
+                ${buatButton(
+                    s.id,
+                    'Izin',
+                    'izin',
+                    status
+                )}
+
+                ${buatButton(
+                    s.id,
+                    'Sakit',
+                    'sakit',
+                    status
+                )}
+
+                ${buatButton(
+                    s.id,
+                    'Alpha',
+                    'alpha',
+                    status
+                )}
+
+            </div>
+
+        </div>
         `;
     });
 
-    document
-        .getElementById('dataSiswa')
+    document.getElementById('daftarSiswa')
         .innerHTML = html;
+
+    updateProgress();
 }
 
-async function simpanAbsensi(){
+function buatButton(
+    siswaId,
+    value,
+    css,
+    selected
+) {
+    return `
+        <button
+            class="
+                btnStatus
+                ${css}
+                ${selected === value ? 'selected' : ''}
+            "
+            onclick="
+                pilihStatus(
+                    ${siswaId},
+                    '${value}'
+                )
+            ">
+            ${value}
+        </button>
+    `;
+}
+
+function pilihStatus(
+    siswaId,
+    status
+) {
+    statusSiswa[siswaId] = status;
+    render();
+}
+
+function updateProgress() {
+
+    const jumlah =
+        Object.keys(statusSiswa).length;
+
+    document.getElementById('progress')
+        .innerText =
+        `${jumlah} / ${siswa.length}`;
+}
+
+async function simpanAbsensi() {
 
     const dataInsert = [];
 
-    siswa.forEach(s=>{
-
-        const status =
-            document.getElementById(
-                `status_${s.id}`
-            ).value;
+    siswa.forEach(s => {
 
         dataInsert.push({
-            tanggal:
-                new Date()
-                .toISOString()
-                .slice(0,10),
-
-            siswa_id:s.id,
-            status:status,
-            petugas_id:user.id
+            tanggal: hariIni,
+            siswa_id: s.id,
+            status: statusSiswa[s.id],
+            petugas_id: user.id
         });
+
     });
 
     const { error } =
         await supabaseClient
-        .from('absensi')
-        .upsert(
-            dataInsert,
-            {
-                onConflict:
-                'siswa_id,tanggal'
-            }
-        );
+            .from('absensi')
+            .upsert(
+                dataInsert,
+                {
+                    onConflict:
+                        'siswa_id,tanggal'
+                }
+            );
 
-    if(error){
+    if (error) {
+        console.log(error);
         alert(error.message);
         return;
     }
 
     alert(
-        'Absensi berhasil disimpan'
+        'Absensi berhasil disimpan.'
     );
+
+    loadData();
 }
