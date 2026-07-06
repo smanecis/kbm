@@ -131,6 +131,21 @@ placeholder="Cari nama siswa..."
 onkeyup="cariSiswa()">
 </div>
 
+    <div style="margin-top:20px;">
+
+<input
+type="file"
+id="fileExcel"
+accept=".xlsx,.xls">
+
+<button
+class="btnTambah"
+onclick="importExcel()">
+Import Excel
+</button>
+
+</div>
+    
 <table>
 
 <thead>
@@ -154,6 +169,7 @@ onkeyup="cariSiswa()">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="js/supabase.js"></script>
 <script src="js/siswa.js"></script>
 
